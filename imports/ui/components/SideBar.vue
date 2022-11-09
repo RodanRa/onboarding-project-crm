@@ -2,59 +2,24 @@
   <div class="sidenav">
     <ul>
       <li class="nav-head"><h3>CRM</h3></li>
-      <li>
-        <button
-          @click="
-            $emit('toggle-tab', 1);
-            setTabNo(1);
-          "
-          v-bind:style="[tabNo === 1 ? { color: 'white' } : {}]"
-        >
-          Organizations
-        </button>
-      </li>
-      <li>
-        <button
-          @click="
-            $emit('toggle-tab', 2);
-            setTabNo(2);
-          "
-          v-bind:style="[tabNo === 2 ? { color: 'white' } : {}]"
-        >
-          Contacts
-        </button>
-      </li>
-      <li>
-        <button
-          @click="
-            $emit('toggle-tab', 3);
-            setTabNo(3);
-          "
-          v-bind:style="[tabNo === 3 ? { color: 'white' } : {}]"
-        >
-          Tags
-        </button>
-      </li>
+      <router-link to="/organizations" class="link">Organizations</router-link>
+      <router-link to="/contacts" class="link">Contacts</router-link>
+      <router-link to="/Tags" class="link">Tags</router-link>
     </ul>
   </div>
 </template>
 <script>
 export default {
   name: "SideBar",
-  data() {
-    return {
-      tabNo: undefined,
-    };
-  },
-  methods: {
-    setTabNo(n) {
-      this.tabNo = n;
-    },
-  },
+  data() {},
+  methods: {},
 };
 </script>
 <style scoped>
 ul {
   list-style-type: none;
+}
+.router-link-exact-active {
+  color: #f1f1f1;
 }
 </style>

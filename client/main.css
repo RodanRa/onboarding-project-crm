@@ -14,7 +14,7 @@ body {
   padding-top: 20px;
 }
 
-.sidenav button,
+.sidenav .link,
 .sidenav .nav-head {
   padding: 6px 6px 6px 32px;
   text-decoration: none;
@@ -28,7 +28,7 @@ body {
   color: white;
 }
 
-.sidenav button:hover {
+.sidenav .link:hover {
   color: #f1f1f1;
 }
 
