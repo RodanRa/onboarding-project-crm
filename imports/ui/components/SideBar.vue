@@ -11,8 +11,6 @@
 <script>
 export default {
   name: "SideBar",
-  data() {},
-  methods: {},
 };
 </script>
 <style scoped>
