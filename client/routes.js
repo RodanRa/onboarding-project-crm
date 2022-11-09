@@ -5,8 +5,14 @@ Vue.use(VueRouter);
 import OrganizationsTab from "../imports/ui/components/OrganizationsTab.vue";
 import ContactsTab from "../imports/ui/components/ContactsTab.vue";
 import TagsTab from "../imports/ui/components/TagsTab.vue";
+import WelcomeTab from "../imports/ui/components/WelcomeTab.vue";
 
 const routes = [
+  {
+    path: "/",
+    name: "Welcome",
+    component: WelcomeTab,
+  },
   {
     path: "/organizations",
     name: "Organizations",
