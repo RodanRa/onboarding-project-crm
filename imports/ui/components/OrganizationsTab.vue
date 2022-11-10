@@ -4,15 +4,23 @@
       <h1>Organizations {{ this.$store.getters.getOrganization.name }}</h1>
     </div>
     <div class="content-body">
-      <AddOrganizationForm />
-      <ul class="organizations-list">
-        <h3>Select Organization</h3>
-        <li v-for="organization in organizations" v-bind:key="organization._id">
-          <button @click="setOrganization(organization)">
-            {{ organization.name }}
-          </button>
-        </li>
-      </ul>
+      <div
+        v-if="currentUser.profile.role == 'keelaAdmin'"
+        class="keela-admin-section"
+      >
+        <AddOrganizationForm />
+        <ul class="organizations-list">
+          <h3>Select Organization</h3>
+          <li
+            v-for="organization in organizations"
+            v-bind:key="organization._id"
+          >
+            <button @click="setOrganization(organization)">
+              {{ organization.name }}
+            </button>
+          </li>
+        </ul>
+      </div>
       <h3>Users list</h3>
       <ul class="users-list">
         <li v-for="user in users" v-bind:key="user._id">
@@ -45,12 +53,6 @@ export default {
   data() {
     return { organizationId: "" };
   },
-  created() {
-    if (this.currentUser.profile.role === "Admin") {
-      this.organizationId = this.currentUser.profile.organizationId;
-    }
-    //console.log(this.organizationId);
-  },
   meteor: {
     $subscribe: {
       organizations: [],
@@ -59,19 +61,33 @@ export default {
     currentUser() {
       return Meteor.user();
     },
+
     organizations() {
-      return OrganizationsCollection.find(
-        { userId: this.currentUser._id },
-        { sort: { createdAt: -1 } }
-      ).fetch();
+      if (this.currentUser.profile.role === "Admin") {
+        const org = OrganizationsCollection.find({
+          _id: this.currentUser.profile.organizationId,
+        }).fetch()[0];
+        if (
+          org !== undefined &&
+          this.$store.getters.getOrganization.name === ""
+        ) {
+          this.$store.dispatch("setOrganization", org);
+          //console.log(this.$store.getters.getOrganization);
+        }
+        return OrganizationsCollection.find({
+          _id: this.currentUser.profile.organizationId,
+        }).fetch();
+      } else {
+        return OrganizationsCollection.find(
+          { userId: this.currentUser._id },
+          { sort: { createdAt: -1 } }
+        ).fetch();
+      }
     },
     users() {
       return Meteor.users
         .find({
-          "profile.organizationId":
-            this.currentUser.profile.role === "keelaAdmin"
-              ? this.$store.getters.getOrganization._id
-              : this.organizationId,
+          "profile.organizationId": this.$store.getters.getOrganization._id,
           // "profile.role": { $ne: "keelaAdmin" },
           _id: { $ne: this.currentUser._id }, //hiding self
         })
@@ -83,7 +99,6 @@ export default {
       this.$store.dispatch("setOrganization", organization);
       //console.table(this.$store.getters.getOrganization);
     },
-
     deleteUser(userId) {
       //console.log(`user ${userId} deleted`);
       Meteor.call("accounts.remove", userId);
