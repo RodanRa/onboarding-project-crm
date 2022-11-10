@@ -17,7 +17,12 @@
       <ul class="users-list">
         <li v-for="user in users" v-bind:key="user._id">
           {{ user.username }} Role: {{ user.profile.role }}
-          <button @click="deleteUser(user._id)">❌</button>
+          <button
+            v-if="currentUser.profile.role == 'Admin'"
+            @click="deleteUser(user._id)"
+          >
+            ❌
+          </button>
         </li>
       </ul>
       <div class="addUserSection">
@@ -37,6 +42,15 @@ export default {
     AddOrganizationForm,
     AddUserForm,
   },
+  data() {
+    return { organizationId: "" };
+  },
+  created() {
+    if (this.currentUser.profile.role === "Admin") {
+      this.organizationId = this.currentUser.profile.organizationId;
+    }
+    //console.log(this.organizationId);
+  },
   meteor: {
     $subscribe: {
       organizations: [],
@@ -54,7 +68,10 @@ export default {
     users() {
       return Meteor.users
         .find({
-          "profile.organizationId": this.$store.getters.getOrganization._id,
+          "profile.organizationId":
+            this.currentUser.profile.role === "keelaAdmin"
+              ? this.$store.getters.getOrganization._id
+              : this.organizationId,
           // "profile.role": { $ne: "keelaAdmin" },
           _id: { $ne: this.currentUser._id }, //hiding self
         })
