@@ -71,7 +71,7 @@ export default {
 </script>
 
 <style scoped>
-.addUserModal,
+.addContactsModal,
 .input-field {
   padding: 10px;
 }
