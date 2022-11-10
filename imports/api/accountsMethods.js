@@ -11,4 +11,7 @@ Meteor.methods({
     Meteor.users.remove({ _id: userId, "profile.role": { $ne: "keelaAdmin" } });
   },
   "accounts.update"(userId, newAccountDetails) {},
+  "account.addTags"(tagName, username) {
+    Meteor.users.update({ username }, { $push: { "profile.tags": tagName } });
+  },
 });

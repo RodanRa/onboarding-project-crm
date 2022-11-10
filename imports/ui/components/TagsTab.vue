@@ -1,5 +1,7 @@
 <template>
-  <h1>Tags Tab</h1>
+  <div class="tags-tab">
+    <router-view></router-view>
+  </div>
 </template>
 <script>
 export default {

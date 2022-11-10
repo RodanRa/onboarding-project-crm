@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
       phone: "",
       _id: "",
     },
+    currentTagView: "",
   },
   getters: {
     getOrganization: (state) => {
