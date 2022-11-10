@@ -38,6 +38,12 @@ export default {
   methods: {
     logout() {
       Meteor.logout();
+      this.$store.dispatch("setOrganization", {
+        name: "",
+        address: "",
+        phone: "",
+        _id: "",
+      });
     },
   },
 };
