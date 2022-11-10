@@ -16,7 +16,8 @@
       <h3>Users list</h3>
       <ul class="users-list">
         <li v-for="user in users" v-bind:key="user._id">
-          {{ user.username }} <button @click="deleteUser(user._id)">❌</button>
+          {{ user.username }} Role: {{ user.profile.role }}
+          <button @click="deleteUser(user._id)">❌</button>
         </li>
       </ul>
       <div class="addUserSection">
@@ -54,6 +55,8 @@ export default {
       return Meteor.users
         .find({
           "profile.organizationId": this.$store.getters.getOrganization._id,
+          // "profile.role": { $ne: "keelaAdmin" },
+          _id: { $ne: this.currentUser._id }, //hiding self
         })
         .fetch();
     },
