@@ -3,6 +3,8 @@ import "/imports/api/organizationsMethods";
 import "/imports/api/organizationsPublications";
 import "/imports/api/accountsMethods";
 import "/imports/api/usersPublications";
+import "/imports/api/contactsPublications";
+import "/imports/api/contactsMethods";
 import { OrganizationsCollection } from "/imports/db/OrganizationsCollection";
 import { Accounts } from "meteor/accounts-base";
 

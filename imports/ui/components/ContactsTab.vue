@@ -1,8 +1,39 @@
 <template>
-  <h1>Contacts Tab</h1>
+  <div class="contacts-tab">
+    <h1>Contacts Tab</h1>
+    <h3>Contacts List</h3>
+    <ul>
+      <li v-for="contact in contacts" v-bind:key="contact._id">
+        {{ contact.username }}
+      </li>
+    </ul>
+    <AddContactsForm />
+  </div>
 </template>
 <script>
+import { ContactsCollection } from "../../db/ContactsCollection";
+import AddContactsForm from "./AddContactsForm.vue";
 export default {
   name: "ContactsTab",
+  components: {
+    AddContactsForm,
+  },
+  meteor: {
+    $subscribe: {
+      contacts: [],
+    },
+    contacts() {
+      // console.log(
+      //   ContactsCollection.find(
+      //     { organizationId: this.$store.getters.getOrganization._id },
+      //     { sort: { createdAt: -1 } }
+      //   ).fetch()
+      // );
+      return ContactsCollection.find(
+        { organizationId: this.$store.getters.getOrganization._id },
+        { sort: { createdAt: -1 } }
+      ).fetch();
+    },
+  },
 };
 </script>
