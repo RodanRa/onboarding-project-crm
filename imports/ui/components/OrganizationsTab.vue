@@ -15,7 +15,9 @@
       </ul>
       <h3>Users list</h3>
       <ul class="users-list">
-        <li v-for="user in users" v-bind:key="user._id">{{ user.username }}</li>
+        <li v-for="user in users" v-bind:key="user._id">
+          {{ user.username }} <button @click="deleteUser(user._id)">❌</button>
+        </li>
       </ul>
       <div class="addUserSection">
         <AddUserForm />
@@ -60,6 +62,11 @@ export default {
     setOrganization(organization) {
       this.$store.dispatch("setOrganization", organization);
       //console.table(this.$store.getters.getOrganization);
+    },
+
+    deleteUser(userId) {
+      //console.log(`user ${userId} deleted`);
+      Meteor.call("accounts.remove", userId);
     },
   },
 };
