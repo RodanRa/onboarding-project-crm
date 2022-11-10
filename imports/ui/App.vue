@@ -6,6 +6,9 @@
         <div class="side-bar">
           <SideBar />
           <div class="content">
+            <div class="user-logout" v-on:click="logout">
+              <button>{{ currentUser.username }} logout</button> 🚪
+            </div>
             <router-view></router-view>
           </div>
         </div>
@@ -17,20 +20,33 @@
 <script>
 import LoginForm from "./components/LoginForm.vue";
 import SideBar from "./components/SideBar.vue";
+import { Meteor } from "meteor/meteor";
 
 export default {
   components: {
     LoginForm,
     SideBar,
   },
-  data() {
-    return {
-      currentUser: true,
-    };
+  meteor: {
+    currentUser() {
+      return Meteor.user();
+    },
   },
-  methods: {},
-  created() {},
+  data() {
+    return {};
+  },
+  methods: {
+    logout() {
+      Meteor.logout();
+    },
+  },
 };
 </script>
 
-<style></style>
+<style>
+.user-logout {
+  display: block;
+  position: absolute;
+  right: 10px;
+}
+</style>

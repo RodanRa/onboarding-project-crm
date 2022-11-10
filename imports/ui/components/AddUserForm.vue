@@ -1,18 +1,42 @@
 <template>
   <div class="controls">
-    <button @click="show" class="addOrganization">Add Organization</button>
-    <modal name="addOrganizationModal">
-      <div class="addOrganizationModal">
+    <button @click="show" class="addUser">Add User</button>
+    <modal name="addUserModal">
+      <div class="addUserModal">
         <form class="login-form" @submit.prevent="handleSubmit">
           <div class="input-field">
-            <label for="organizationName">Organization Name</label>
+            <label for="username">Username</label>
             <input
-              id="organizationName"
-              name="organizationName"
+              id="username"
+              name="username"
               type="text"
-              placeholder="Organization Name"
+              placeholder="Username"
               required
-              v-model="organizationName"
+              v-model="username"
+            />
+          </div>
+
+          <div class="input-field">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="text"
+              placeholder="password"
+              required
+              v-model="password"
+            />
+          </div>
+
+          <div class="input-field">
+            <label for="role">Password</label>
+            <input
+              id="role"
+              name="role"
+              type="text"
+              placeholder="role"
+              required
+              v-model="role"
             />
           </div>
 
@@ -50,13 +74,13 @@
   </div>
 </template>
 <script>
-import { MeteorData } from "vue-meteor-tracker";
-
 export default {
-  name: "AddOrganizationForm",
+  name: "AddUserForm",
   data() {
     return {
-      organizationName: "",
+      username: "",
+      password: "",
+      role: "",
       address: "",
       phone: "",
     };
@@ -68,17 +92,21 @@ export default {
   },
   methods: {
     show() {
-      this.$modal.show("addOrganizationModal");
+      this.$modal.show("addUserModal");
     },
     hide() {
-      this.$modal.hide("addOrganizationModal");
+      this.$modal.hide("addUserModal");
     },
     handleSubmit(event) {
-      Meteor.call("organizations.insert", {
-        name: this.organizationName,
-        address: this.address,
-        phone: this.phone,
-        userId: this.currentUser._id,
+      Meteor.call("accounts.insert", {
+        username: this.username,
+        password: this.password,
+        profile: {
+          role: this.role,
+          address: this.address,
+          phone: this.phone,
+          organizationId: this.$store.getters.getOrganization._id,
+        },
       });
       this.hide();
     },
@@ -87,7 +115,7 @@ export default {
 </script>
 
 <style scoped>
-.addOrganizationModal,
+.addUserModal,
 .input-field {
   padding: 10px;
 }
