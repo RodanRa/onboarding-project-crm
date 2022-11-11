@@ -1,5 +1,6 @@
 import { check } from "meteor/check";
 import { OrganizationsCollection } from "../db/OrganizationsCollection.js";
+import { Meteor } from "meteor/meteor";
 
 Meteor.methods({
   "organizations.insert"(organizationDetails) {
@@ -13,6 +14,9 @@ Meteor.methods({
     const organization = OrganizationsCollection.findOne({
       _id: organizationId,
     });
+    if (!organization) {
+      Meteor.Error("Organization doesn't exist");
+    }
     OrganizationsCollection.remove(organizationId);
   },
   "organizations.update"(organizationId, newOrganizationDetails) {

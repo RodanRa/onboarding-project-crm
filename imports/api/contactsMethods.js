@@ -15,13 +15,16 @@ Meteor.methods({
   "contacts.addTags"(tagName, username) {
     ContactsCollection.update({ username }, { $addToSet: { tags: tagName } });
   },
-  "contacts.remove"(organizationId) {
-    // const organization = OrganizationsCollection.findOne({
-    //   _id: organizationId,
-    // });
-    // OrganizationsCollection.remove(organizationId);
+  "contacts.remove"(contactId) {
+    const contact = ContactsCollection.findOne({
+      _id: contactId,
+    });
+    if (!contact) {
+      Meteor.Error("Contact doesn't exist");
+    }
+    ContactsCollection.remove(contactId);
   },
-  "contacts.update"(organizationId, newOrganizationDetails) {
-    //OrganizationsCollection.update(organizationId, newOrganizationDetails);
+  "contacts.update"(contactId, newContactDetails) {
+    ContactsCollection.update(contactId, newContactDetails);
   },
 });

@@ -7,13 +7,16 @@ Meteor.methods({
       createdAt: new Date(),
     });
   },
-  "tags.remove"(organizationId) {
-    // const organization = OrganizationsCollection.findOne({
-    //   _id: organizationId,
-    // });
-    // OrganizationsCollection.remove(organizationId);
+  "tags.remove"(tagId) {
+    const tag = TagsCollection.findOne({
+      _id: tagId,
+    });
+    if (!tag) {
+      Meteor.Error("Tag doesn't exist");
+    }
+    TagsCollection.remove(tagId);
   },
-  "tags.update"(organizationId, newOrganizationDetails) {
-    //OrganizationsCollection.update(organizationId, newOrganizationDetails);
+  "tags.update"(tagId, newTagDetails) {
+    TagsCollection.update(tagId, newTagDetails);
   },
 });
