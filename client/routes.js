@@ -1,5 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
+import { Meteor } from "meteor/meteor";
 
 Vue.use(VueRouter);
 import OrganizationsTab from "../imports/ui/components/OrganizationsTab.vue";
@@ -19,6 +20,14 @@ const routes = [
     path: "/organizations",
     name: "Organizations",
     component: OrganizationsTab,
+    beforeEnter: (to, from, next) => {
+      if (
+        Meteor.user().profile.role === "Admin" ||
+        Meteor.user().profile.role === "keelaAdmin"
+      ) {
+        next();
+      }
+    },
   },
   {
     path: "/contacts",
