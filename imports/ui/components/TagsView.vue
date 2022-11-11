@@ -15,6 +15,9 @@
     <ul class="users-list">
       <li v-for="user in users" v-bind:key="user._id">
         {{ user.username }}
+        <p v-for="(tag, index) in user.profile.tags" v-bind:key="index">
+          {{ tag }}
+        </p>
       </li>
     </ul>
   </div>
