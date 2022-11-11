@@ -7,7 +7,7 @@
         v-bind:key="tag._id"
         @click="singleTagView(tag._id, tag.tagname)"
       >
-        {{ tag.tagname }}
+        <button>{{ tag.tagname }}</button>
       </li>
     </ul>
     <router-view></router-view>
@@ -43,3 +43,12 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+button {
+  margin: 5px;
+}
+button:hover {
+  cursor: pointer;
+}
+</style>
