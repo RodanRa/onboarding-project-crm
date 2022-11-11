@@ -12,9 +12,9 @@
       />
       <button type="submit">Add</button>
     </form>
-    <ul class="users-list">
+    <ul class="tags-users-list">
       <li v-for="user in users" v-bind:key="user._id">
-        {{ user.username }}
+        <div class="username-display">{{ user.username }}</div>
         <p v-for="(tag, index) in user.profile.tags" v-bind:key="index">
           {{ tag }}
         </p>
@@ -66,5 +66,13 @@ export default {
 <style scoped>
 form {
   margin: 10px;
+}
+.tags-users-list {
+  border: 2px solid blue;
+  width: 500px;
+  margin: 5px;
+}
+.tags-users-list > li > .username-display {
+  text-decoration: underline;
 }
 </style>
