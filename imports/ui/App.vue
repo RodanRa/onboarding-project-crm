@@ -44,6 +44,9 @@ export default {
         phone: "",
         _id: "",
       });
+      if (this.$route.fullPath != "/") {
+        this.$router.replace("/");
+      }
     },
   },
 };

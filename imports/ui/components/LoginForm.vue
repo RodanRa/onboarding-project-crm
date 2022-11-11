@@ -43,8 +43,10 @@ export default {
   },
   methods: {
     handleSubmit(event) {
-      // to reset the route at each login
-      this.$router.push("/");
+      // to reset the route at logout
+      if (this.$route.fullPath != "/") {
+        this.$router.replace("/");
+      }
       Meteor.loginWithPassword(this.username, this.password);
     },
   },
