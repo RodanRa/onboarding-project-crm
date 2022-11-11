@@ -47,7 +47,7 @@ export default {
     handleSubmit(event) {
       Meteor.call("tags.insert", {
         tagname: this.tagname,
-        organizationId: this.$store.getters.getOrganization._id,
+        organizationId: this.currentUser.profile.organizationId,
       });
       this.hide();
     },

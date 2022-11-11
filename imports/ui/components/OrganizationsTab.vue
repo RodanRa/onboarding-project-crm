@@ -1,7 +1,10 @@
 <template>
   <div class="heading">
     <div class="tab-title">
-      <h1>Organizations {{ this.$store.getters.getOrganization.name }}</h1>
+      <h1>
+        Organizations {{ this.$store.getters.getOrganization.name }}
+        {{ myOrganizationName }}
+      </h1>
     </div>
     <div class="content-body">
       <div
@@ -67,13 +70,13 @@ export default {
         const org = OrganizationsCollection.find({
           _id: this.currentUser.profile.organizationId,
         }).fetch()[0];
-        if (
-          org !== undefined &&
-          this.$store.getters.getOrganization.name === ""
-        ) {
-          this.$store.dispatch("setOrganization", org);
-          //console.log(this.$store.getters.getOrganization);
-        }
+        // if (
+        //   org !== undefined &&
+        //   this.$store.getters.getOrganization.name === ""
+        // ) {
+        //   this.$store.dispatch("setOrganization", org);
+        //   //console.log(this.$store.getters.getOrganization);
+        // }
         return OrganizationsCollection.find({
           _id: this.currentUser.profile.organizationId,
         }).fetch();
@@ -84,14 +87,33 @@ export default {
         ).fetch();
       }
     },
+    myOrganizationName() {
+      if (this.currentUser.profile.role !== "keelaAdmin") {
+        return OrganizationsCollection.findOne({
+          _id: this.currentUser.profile.organizationId,
+        }).name;
+      } else {
+        return "";
+      }
+    },
     users() {
-      return Meteor.users
-        .find({
-          "profile.organizationId": this.$store.getters.getOrganization._id,
-          // "profile.role": { $ne: "keelaAdmin" },
-          _id: { $ne: this.currentUser._id }, //hiding self
-        })
-        .fetch();
+      if (this.currentUser.profile.role !== "keelaAdmin") {
+        return Meteor.users
+          .find({
+            "profile.organizationId": this.currentUser.profile.organizationId,
+            // "profile.role": { $ne: "keelaAdmin" },
+            _id: { $ne: this.currentUser._id }, //hiding self
+          })
+          .fetch();
+      } else {
+        return Meteor.users
+          .find({
+            "profile.organizationId": this.$store.getters.getOrganization._id,
+            // "profile.role": { $ne: "keelaAdmin" },
+            _id: { $ne: this.currentUser._id }, //hiding self
+          })
+          .fetch();
+      }
     },
   },
   methods: {

@@ -12,6 +12,7 @@ export const store = new Vuex.Store({
       _id: "",
     },
     currentTagView: "",
+    user: {},
   },
   getters: {
     getOrganization: (state) => {

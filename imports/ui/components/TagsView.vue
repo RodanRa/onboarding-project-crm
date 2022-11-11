@@ -49,9 +49,12 @@ export default {
     $subscribe: {
       contacts: [],
     },
+    currentUser() {
+      return Meteor.user();
+    },
     contacts() {
       return ContactsCollection.find({
-        organizationId: this.$store.getters.getOrganization._id,
+        organizationId: this.currentUser.profile.organizationId,
         tags: {
           $elemMatch: { $eq: this.$store.state.currentTagView },
         },

@@ -1,11 +1,16 @@
 import { ContactsCollection } from "../db/ContactsCollection.js";
+import { Meteor } from "meteor/meteor";
 
 Meteor.methods({
   "contacts.insert"(contactDetails) {
-    ContactsCollection.insert({
-      ...contactDetails,
-      createdAt: new Date(),
-    });
+    if (Meteor.user().profile.role === "Admin") {
+      ContactsCollection.insert({
+        ...contactDetails,
+        createdAt: new Date(),
+      });
+    } else {
+      Meteor.Error("Not Authorized");
+    }
   },
   "contacts.addTags"(tagName, username) {
     ContactsCollection.update({ username }, { $addToSet: { tags: tagName } });

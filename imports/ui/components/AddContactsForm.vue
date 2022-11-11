@@ -62,7 +62,7 @@ export default {
       Meteor.call("contacts.insert", {
         username: this.username,
         phone: this.phone,
-        organizationId: this.$store.getters.getOrganization._id,
+        organizationId: this.currentUser.profile.organizationId,
       });
       this.hide();
     },

@@ -27,7 +27,7 @@ export default {
     },
     contacts() {
       return ContactsCollection.find(
-        { organizationId: this.$store.getters.getOrganization._id },
+        { organizationId: this.currentUser.profile.organizationId },
         { sort: { createdAt: -1 } }
       ).fetch();
     },

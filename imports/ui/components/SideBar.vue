@@ -16,12 +16,31 @@
   </div>
 </template>
 <script>
+import { OrganizationsCollection } from "../../db/OrganizationsCollection";
 export default {
   name: "SideBar",
   meteor: {
+    $subscribe: {
+      organizations: [],
+    },
     currentUser() {
       return Meteor.user();
     },
+    // organizations() {
+    //   return OrganizationsCollection.find({}).fetch();
+    // },
+  },
+  created() {
+    //console.log(OrganizationsCollection.find({}).fetch());
+    // this.$store.state.user = this.currentUser;
+    // console.log(this.organizations);
+    // console.log(this.organizations);
+    // this.$store.dispatch("setOrganization", org);
+    // console.log(this.$store.getters.getOrganization.name);
+    // if (org !== undefined && this.$store.getters.getOrganization.name === "") {
+    // }
+    // to reset the route at each login
+    // this.$router.push("/");
   },
 };
 </script>

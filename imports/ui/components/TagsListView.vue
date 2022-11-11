@@ -34,9 +34,12 @@ export default {
     $subscribe: {
       tags: [],
     },
+    currentUser() {
+      return Meteor.user();
+    },
     tags() {
       return TagsCollection.find(
-        { organizationId: this.$store.getters.getOrganization._id },
+        { organizationId: this.currentUser.profile.organizationId },
         { sort: { createdAt: -1 } }
       ).fetch();
     },
