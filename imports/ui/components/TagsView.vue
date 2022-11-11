@@ -1,7 +1,7 @@
 <template>
   <div class="tags-view">
     <h1>Tag: {{ this.$store.state.currentTagView }}</h1>
-    <form class="addTagsToUserForm" @submit.prevent="handleSubmit">
+    <form class="addTagsToContactsForm" @submit.prevent="handleSubmit">
       <input
         id="username"
         name="username"
@@ -12,10 +12,10 @@
       />
       <button type="submit">Add</button>
     </form>
-    <ul class="tags-users-list">
-      <li v-for="user in users" v-bind:key="user._id">
-        <div class="username-display">{{ user.username }}</div>
-        <p v-for="(tag, index) in user.profile.tags" v-bind:key="index">
+    <ul class="tags-contacts-list">
+      <li v-for="contact in contacts" v-bind:key="contact._id">
+        <div class="username-display">{{ contact.username }}</div>
+        <p v-for="(tag, index) in contact.tags" v-bind:key="index">
           {{ tag }}
         </p>
       </li>
@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { ContactsCollection } from "../../db/ContactsCollection";
 export default {
   name: "TagsView",
   data() {
@@ -37,9 +38,8 @@ export default {
   },
   methods: {
     handleSubmit() {
-      console.log("submitted");
       Meteor.call(
-        "account.addTags",
+        "contacts.addTags",
         this.$store.state.currentTagView,
         this.username
       );
@@ -47,17 +47,15 @@ export default {
   },
   meteor: {
     $subscribe: {
-      users: [],
+      contacts: [],
     },
-    users() {
-      return Meteor.users
-        .find({
-          "profile.organizationId": this.$store.getters.getOrganization._id,
-          "profile.tags": {
-            $elemMatch: { $eq: this.$store.state.currentTagView },
-          },
-        })
-        .fetch();
+    contacts() {
+      return ContactsCollection.find({
+        organizationId: this.$store.getters.getOrganization._id,
+        tags: {
+          $elemMatch: { $eq: this.$store.state.currentTagView },
+        },
+      }).fetch();
     },
   },
 };
@@ -67,12 +65,7 @@ export default {
 form {
   margin: 10px;
 }
-.tags-users-list {
-  border: 2px solid blue;
-  width: 500px;
-  margin: 5px;
-}
-.tags-users-list > li > .username-display {
+.tags-contacts-list > li > .username-display {
   text-decoration: underline;
 }
 </style>

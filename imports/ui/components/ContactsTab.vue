@@ -7,7 +7,7 @@
         {{ contact.username }}
       </li>
     </ul>
-    <AddContactsForm />
+    <AddContactsForm v-if="this.currentUser.profile.role === 'Admin'" />
   </div>
 </template>
 <script>
@@ -22,13 +22,10 @@ export default {
     $subscribe: {
       contacts: [],
     },
+    currentUser() {
+      return Meteor.user();
+    },
     contacts() {
-      // console.log(
-      //   ContactsCollection.find(
-      //     { organizationId: this.$store.getters.getOrganization._id },
-      //     { sort: { createdAt: -1 } }
-      //   ).fetch()
-      // );
       return ContactsCollection.find(
         { organizationId: this.$store.getters.getOrganization._id },
         { sort: { createdAt: -1 } }

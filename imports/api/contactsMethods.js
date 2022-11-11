@@ -7,6 +7,9 @@ Meteor.methods({
       createdAt: new Date(),
     });
   },
+  "contacts.addTags"(tagName, username) {
+    ContactsCollection.update({ username }, { $addToSet: { tags: tagName } });
+  },
   "contacts.remove"(organizationId) {
     // const organization = OrganizationsCollection.findOne({
     //   _id: organizationId,
