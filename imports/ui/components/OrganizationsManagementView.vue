@@ -27,7 +27,9 @@
       <h3>Users list</h3>
       <ul class="users-list">
         <li v-for="user in users" v-bind:key="user._id">
-          <div @click="updateUser(user._id)">{{ user.username }}</div>
+          <div @click="updateUser(user._id)" class="user-selection">
+            <button>{{ user.username }}</button>
+          </div>
           Role: {{ user.profile.role }}
           <button
             v-if="currentUser.profile.role == 'Admin'"
@@ -139,4 +141,7 @@ export default {
 ul {
   list-style-type: none;
 }
+/* .user-selection:hover {
+  cursor: pointer;
+} */
 </style>
