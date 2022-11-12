@@ -84,7 +84,7 @@ export default {
       return Meteor.user();
     },
   },
-  async created() {
+  async mounted() {
     //setting v-model data with actual values
     const user = await Meteor.callAsync(
       "accounts.getUserById",
@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     hide() {
-      this.$router.go(-1);
+      this.$router.replace("/organizations");
     },
     handleSubmit(event) {
       Meteor.call("accounts.update", this.$route.params.id, {

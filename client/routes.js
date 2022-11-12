@@ -10,6 +10,7 @@ import WelcomeTab from "../imports/ui/components/WelcomeTab.vue";
 import TagsView from "../imports/ui/components/TagsView.vue";
 import TagsListView from "../imports/ui/components/TagsListView.vue";
 import UpdateUserForm from "../imports/ui/components/UpdateUserForm.vue";
+import OrganizationsManagementView from "../imports/ui/components/OrganizationsManagementView.vue";
 
 const routes = [
   {
@@ -30,6 +31,11 @@ const routes = [
       }
     },
     children: [
+      {
+        path: "",
+        name: "OrganizationsManagementView",
+        component: OrganizationsManagementView,
+      },
       { path: ":id", name: "UpdateUserForm", component: UpdateUserForm },
     ],
   },
