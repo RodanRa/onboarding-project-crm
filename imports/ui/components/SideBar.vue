@@ -1,7 +1,7 @@
 <template>
   <div class="sidenav">
     <ul>
-      <li class="nav-head"><h3>CRM</h3></li>
+      <li class="nav-head" @click="goToRootPath"><h3>CRM</h3></li>
       <router-link
         v-if="this.currentUser.profile.role !== 'coordinator'"
         to="/organizations"
@@ -19,6 +19,13 @@
 import { OrganizationsCollection } from "../../db/OrganizationsCollection";
 export default {
   name: "SideBar",
+  methods: {
+    goToRootPath() {
+      if (this.$route.fullPath != "/") {
+        this.$router.replace("/");
+      }
+    },
+  },
   meteor: {
     $subscribe: {
       organizations: [],
@@ -50,5 +57,8 @@ ul {
 }
 .router-link-exact-active {
   color: #f1f1f1;
+}
+.nav-head:hover {
+  cursor: pointer;
 }
 </style>
