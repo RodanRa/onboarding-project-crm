@@ -9,6 +9,7 @@ import TagsTab from "../imports/ui/components/TagsTab.vue";
 import WelcomeTab from "../imports/ui/components/WelcomeTab.vue";
 import TagsView from "../imports/ui/components/TagsView.vue";
 import TagsListView from "../imports/ui/components/TagsListView.vue";
+import UpdateUserForm from "../imports/ui/components/UpdateUserForm.vue";
 
 const routes = [
   {
@@ -28,6 +29,9 @@ const routes = [
         next();
       }
     },
+    children: [
+      { path: ":id", name: "UpdateUserForm", component: UpdateUserForm },
+    ],
   },
   {
     path: "/contacts",

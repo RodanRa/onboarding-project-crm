@@ -6,7 +6,7 @@
         {{ myOrganizationName }}
       </h1>
     </div>
-    <div class="content-body">
+    <div class="content-body org-user-mngmnt">
       <div
         v-if="currentUser.profile.role == 'keelaAdmin'"
         class="keela-admin-section"
@@ -27,7 +27,8 @@
       <h3>Users list</h3>
       <ul class="users-list">
         <li v-for="user in users" v-bind:key="user._id">
-          {{ user.username }} Role: {{ user.profile.role }}
+          <div @click="updateUser(user._id)">{{ user.username }}</div>
+          Role: {{ user.profile.role }}
           <button
             v-if="currentUser.profile.role == 'Admin'"
             @click="deleteUser(user._id)"
@@ -40,6 +41,7 @@
         <AddUserForm />
       </div>
     </div>
+    <router-view></router-view>
   </div>
 </template>
 <script>
@@ -124,6 +126,12 @@ export default {
     deleteUser(userId) {
       //console.log(`user ${userId} deleted`);
       Meteor.call("accounts.remove", userId);
+    },
+    updateUser(userId) {
+      this.$router.push({
+        name: "UpdateUserForm",
+        params: { id: userId },
+      });
     },
   },
 };

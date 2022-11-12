@@ -34,7 +34,7 @@
               id="role"
               name="role"
               type="text"
-              placeholder="role"
+              placeholder="role (keelaAdmin/Admin/coordinator)"
               required
               v-model="role"
             />
@@ -121,5 +121,8 @@ export default {
 }
 button {
   margin: 10px;
+}
+#role {
+  width: 230px;
 }
 </style>
