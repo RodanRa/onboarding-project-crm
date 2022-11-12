@@ -105,7 +105,10 @@ export default {
           role: this.role,
           address: this.address,
           phone: this.phone,
-          organizationId: this.$store.getters.getOrganization._id,
+          organizationId:
+            this.currentUser.profile.role === "keelaAdmin"
+              ? this.$store.getters.getOrganization._id
+              : this.currentUser.profile.organizationId,
         },
       });
       this.hide();
