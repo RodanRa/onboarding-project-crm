@@ -4,6 +4,10 @@ import { Meteor } from "meteor/meteor";
 
 Meteor.methods({
   "organizations.insert"(organizationDetails) {
+    const user = Meteor.user();
+    if (user.profile.role !== "keelaAdmin") {
+      return Meteor.Error("Operation Not Authorized");
+    }
     OrganizationsCollection.insert({
       ...organizationDetails,
       createdAt: new Date(),
@@ -11,6 +15,10 @@ Meteor.methods({
   },
   "organizations.remove"(organizationId) {
     check(organizationId, String);
+    const user = Meteor.user();
+    if (user.profile.role !== "keelaAdmin") {
+      return Meteor.Error("Operation Not Authorized");
+    }
     const organization = OrganizationsCollection.findOne({
       _id: organizationId,
     });
@@ -21,6 +29,10 @@ Meteor.methods({
   },
   "organizations.update"(organizationId, newOrganizationDetails) {
     check(organizationId, String);
+    const user = Meteor.user();
+    if (user.profile.role !== "keelaAdmin") {
+      return Meteor.Error("Operation Not Authorized");
+    }
     OrganizationsCollection.update(organizationId, newOrganizationDetails);
   },
 });
