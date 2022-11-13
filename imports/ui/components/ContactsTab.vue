@@ -4,7 +4,13 @@
     <h3>Contacts List</h3>
     <ul>
       <li v-for="contact in contacts" v-bind:key="contact._id">
-        {{ contact.username }}
+        {{ contact.username
+        }}<button
+          v-if="currentUser.profile.role == 'Admin'"
+          @click="deleteContact(contact._id)"
+        >
+          ❌
+        </button>
       </li>
     </ul>
     <AddContactsForm v-if="this.currentUser.profile.role === 'Admin'" />
@@ -17,6 +23,11 @@ export default {
   name: "ContactsTab",
   components: {
     AddContactsForm,
+  },
+  methods: {
+    deleteContact(contactId) {
+      Meteor.call("contacts.remove", contactId);
+    },
   },
   meteor: {
     $subscribe: {
